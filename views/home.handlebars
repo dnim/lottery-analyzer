@@ -4,3 +4,17 @@
     <input type="hidden" name="longitude" value=""/>
     <button type="submit" class="btn btn-primary btn-lg" disabled>Check In!</button>
 </form>
+
+{{! below the form, above the script tag }}
+{{#if error}}
+<p class="text-warning">{{error}}</p>
+{{/if}}
+{{#if location}}
+<p>
+    The browser says you are at <strong>{{location.latitude}}, {{location.longitude}}</strong>.
+</p>
+<p>
+    This lat/lon seems to equate to:
+    <blockquote>{{location.address}}</blockquote>
+</p>
+{{/if}}

@@ -9,6 +9,9 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
+// Our simple database.
+var db = require("./src/db");
+
 var expresshandlebars = require('express3-handlebars');
 
 var app = express();
@@ -40,6 +43,14 @@ app.get('/', function(req, res){
 });
 app.post('/', require('./routes/index_post.js'));
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+// Initialize the database before starting the server.
+db.init(function(err) {
+    if (err) {
+        console.log(err);
+    }
+    else {
+        http.createServer(app).listen(app.get('port'), function(){
+          console.log('Express server listening on port ' + app.get('port'));
+        });
+    }
 });
