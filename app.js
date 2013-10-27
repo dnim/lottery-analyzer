@@ -38,6 +38,7 @@ if ('development' == app.get('env')) {
 app.get('/', function(req, res){
 	res.render('home');
 });
+app.post('/', require('./routes/index_post.js'));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
