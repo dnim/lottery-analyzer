@@ -3,6 +3,9 @@ var request = require("request");
 // Proxy through YQL.
 var whereURL = 'http://query.yahooapis.com/v1/public/yql?format=json&q=select * from geo.placefinder where gflags="R" and text="{LAT},{LON}"';
 
+// Access to the database.
+var db = require("../src/db");
+
 // express extends the Node concept of request/response HTTP architecture,
 // but also keeps true to the basic idea.
 var revgeo = function(lat, lon, callback) {
@@ -23,10 +26,26 @@ var revgeo = function(lat, lon, callback) {
 
         if (error || response.statusCode != 200) {
             callback("Error contacting the reverse geocoding service.");
-        }
-        else {
-            callback(null, address);
-        }
+        } else {
+            // Save an address.
+            console.log("save adress!")
+            db.Breadcrumb.create([
+                {
+                    date: new Date(),
+                    latitude: lat,
+                    longitude: lon,
+                    address: address
+                }
+            ], function (err, items) {
+                // err - description of the error or null
+                // items - array of inserted items
+                // Pass back both err and address at this point.
+                callback(err, address);
+            });
+        }      
+        //   else {
+        //     callback(null, address);
+        // }
     });
 };
 
@@ -38,13 +57,17 @@ module.exports = function(req, res) {
         // diagnostic
         console.log(latitude, longitude, err, address);
 
-        res.render('home', {
-            error: err,
-            location: {
-                latitude: latitude,
-                longitude: longitude,
-                address: address
-            }
+        db.Breadcrumb.find(function(err, items) {
+            res.render('home', {    
+                error: err,
+                location: {
+                    latitude: latitude,
+                    longitude: longitude,
+                    address: address
+                },
+                // Make the breadcrumbs available on checkin.
+                breadcrumbs: items
+            });
         });
     });
 };
