@@ -41,6 +41,12 @@ if ('development' == app.get('env')) {
 app.get('/', function(req, res){
 	res.render('home');
 });
+
+// test
+app.get('/indexTest', function(req, res){
+	res.render('indexx');
+});
+
 app.post('/', require('./routes/index_post.js'));
 
 // Initialize the database before starting the server.
