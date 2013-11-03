@@ -1,0 +1,23 @@
+{{!-- start page. right now here we will display list of draws from the db. all of them. --}}
+
+
+{{!-- here is the form for new draw --}}
+<p>Hi 
+  <b>
+    {{#if user}}
+      {{user.name}}
+    {{else}}
+      anonymous
+    {{/if}}
+  </b>! 
+Here will be form to enter new draws. Also below will be list of already entered draws</p>
+
+{{!-- list of all draws --}}
+{{#if draws}}
+<h4>here the all draws from db:</h4>
+<ul>
+    {{#each draws}}
+    <li>({{date}}): we visited {{address}}</li>
+    {{/each}}
+</ul>
+{{/if}}

@@ -10,7 +10,12 @@ var express = require('express')
   , path = require('path');
 
 // Our simple database.
-var db = require("./src/db");
+// var db = require("./src/db");
+
+// New Code
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/lottery');
 
 var expresshandlebars = require('express3-handlebars');
 
@@ -38,25 +43,18 @@ if ('development' == app.get('env')) {
 
 //app.get('/', routes.index);
 //app.get('/users', user.list);
+// app.get('/', function(req, res){
+// 	res.render('home');
+// });
+
 app.get('/', function(req, res){
-	res.render('home');
+  res.render('index');
 });
 
-// test
-app.get('/indexTest', function(req, res){
-	res.render('indexx');
-});
+app.get('/main', rotes.draws(db))
 
-app.post('/', require('./routes/index_post.js'));
+app.get('/users', routes.userlist(db));
 
-// Initialize the database before starting the server.
-db.init(function(err) {
-    if (err) {
-        console.log(err);
-    }
-    else {
-        http.createServer(app).listen(app.get('port'), function(){
-          console.log('Express server listening on port ' + app.get('port'));
-        });
-    }
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
 });
