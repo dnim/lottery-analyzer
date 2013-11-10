@@ -5,14 +5,11 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
+  , draws = require('./routes/draws')
   , http = require('http')
   , path = require('path');
 
-// Our simple database.
-// var db = require("./src/db");
-
-// New Code
+// database 
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/lottery');
@@ -41,19 +38,15 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//app.get('/', routes.index);
-//app.get('/users', user.list);
-// app.get('/', function(req, res){
-// 	res.render('home');
-// });
-
 app.get('/', function(req, res){
   res.render('index');
 });
-
-app.get('/main', rotes.draws(db))
-
+app.get('/showdraws', draws.showdraws(db));
+app.post('/showdraws', draws.showdraws(db));
+app.post('/newdraw', draws.newdraw(db));
 app.get('/users', routes.userlist(db));
+
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
