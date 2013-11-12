@@ -1,0 +1,50 @@
+{{!-- TODO: render draws --}}
+
+<div class="container draws">
+  <h3>Draws for {{user.name}}</h3>
+  <div class="row show-grid">
+    Please, enter a new draw results:
+    <form method="post" action="/showdraws">
+      <div class="span12">
+        <div class="row" id="add-new-draw"></div>
+        <div class="row show-grid">
+          <div class="span2 offset10">
+            <input type="submit" class="btn btn-info " value="Add draw" />
+          </div>        
+        </div>
+      </div>
+    </form>
+  </div>
+
+  {{!-- list of draws --}}
+  <div class="hero-unit">
+    <ul class="list-group">
+      {{#each user.draws}}
+        <li class="list-group-item"> 
+          DATE: {{date}} ->
+          {{#each balls}}
+            {{number}} ({{color}}) | 
+          {{/each}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+
+
+  <script id="ball-form" type="text/x-handlebars-template">
+    <div class="span2">
+      <div class="row">
+        <div class="span1">
+          <select name="ball-\{{index}}">
+            \{{{renderOptions}}}
+          </select>                   
+        </div>
+        <div class="span1">
+          <button type="button" class="btn btn-warning color-changer"></button>
+          <input type="hidden" name="ball-\{{index}}-color" value="yellow">
+        </div>
+      </div>  
+    </div>
+  </script>
+
+</div>
