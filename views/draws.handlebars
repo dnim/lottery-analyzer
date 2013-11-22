@@ -1,10 +1,12 @@
 {{!-- TODO: render draws --}}
 
+<div>requestedData: {{requestedData}}</div>
+
 <div class="container draws">
   <h3>Draws for {{user.name}}</h3>
   <div class="row show-grid">
     Please, enter a new draw results:
-    <form method="post" action="/showdraws">
+    <form method="post" action="/newdraw">
       <div class="span12">
         <div class="row" id="add-new-draw"></div>
         <div class="row show-grid">
@@ -48,3 +50,6 @@
   </script>
 
 </div>
+
+{{!-- rendering draws --}}
+<script src="javascripts/handledraws.js"></script> 
