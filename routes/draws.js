@@ -1,22 +1,42 @@
 // TODO: add logic to handle draws / statistics and so on
 
 exports.newdraw = function (db){
-  // TODO: add to the db new entry, render it on the UI
   return function (req, res) {
-    res.render("draws", {
-      requestedData: req.body["ball-1"]
+    console.log(req.body)
+    var user = db.get("user").findOne({name:'andrew'}, function(e, user){
+      console.log(">> " + user);
+      user.draws.push(populateDraw(req.body));
+      user.password = "123";
+      db.get("user").update({name:'andrew'}, user);
+      res.render("draws", {
+        requestedData: req.body["ball-1"],
+        user:user
+      });
     });
   }
+
+  function populateDraw(rawDrawFromUi){
+    var balls = [];
+    for (var i = 1; i < 7; i++) {
+      var ball = { 
+                    number:parseInt(rawDrawFromUi["ball-" + i]),
+                    color:rawDrawFromUi["ball-" + i + "-color"]
+                  } 
+      balls.push(ball)
+    };
+    return {date:new Date(), balls:balls}
+  }
 };
+
+
 
 exports.showdraws = function (db) {
   return function (req, res) {
     var users = db.get("user");
-    users.findOne({}, function(e, user){
+    users.findOne({name:'andrew'}, function(e, user){
       res.render("draws", { 
         user: user
       });
     });
-    // for(var i=1; i<7;i++) balls.add(1)
   };
 };
