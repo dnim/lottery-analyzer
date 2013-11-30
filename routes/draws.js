@@ -6,7 +6,7 @@ exports.newdraw = function (db){
     var user = db.get("user").findOne({name:'andrew'}, function(e, user){
       console.log(">> " + user);
       user.draws.push(populateDraw(req.body));
-      user.password = "123";
+      // user.password = "123";
       db.get("user").update({name:'andrew'}, user);
       res.render("draws", {
         requestedData: req.body["ball-1"],
@@ -24,11 +24,15 @@ exports.newdraw = function (db){
                   } 
       balls.push(ball)
     };
-    return {date:new Date(), balls:balls}
+    return {date:new Date().getTime(), balls:balls}
   }
 };
 
-
+exports.deletedraw = function (db) {
+  return function (req, res){
+    
+  }
+}
 
 exports.showdraws = function (db) {
   return function (req, res) {
