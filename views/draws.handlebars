@@ -1,55 +1,63 @@
 {{!-- TODO: render draws --}}
 
- <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-remove"></span> Star
-</button>
-
-
 <div class="container draws">
   <h3>Draws for {{user.name}}</h3>
   <div class="row show-grid">
     Please, enter a new draw results:
     <form method="post" action="/newdraw">
-      <div class="span12">
-        <div class="row" id="add-new-draw"></div>
-        <div class="row show-grid">
-          <div class="span2 offset10">
-            <input type="submit" class="btn btn-info " value="Add draw" />
-          </div>        
+      <div class="row">
+        <div class="col-sm-10">
+          <div class="row" id="add-new-draw"></div>
         </div>
+        <div class="col-sm-2">
+          {{!-- add draw button --}}
+          <input type="submit" class="btn btn-info" value="Add draw" />
+        </div>
+
       </div>
     </form>
   </div>
 
   {{!-- list of draws --}}
-  <div class="hero-unit">
-    <ul class="list-group">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Results</th>
+      </tr>
+    </thead>
+    <tbody>
       {{#each user.draws}}
-        <li class="list-group-item"> 
-          DATE: {{date}} ->
-          {{#each balls}}
-            {{number}} ({{color}}) | 
-          {{/each}}
-        </li>
+        <tr class=""> 
+          <td>
+            DATE: {{date}}
+          </td>
+            {{#each balls}}
+              <td>
+                {{number}} ({{color}})
+              </td>
+            {{/each}}
+          </td>
+          <td>
+            <button type="button" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-remove"></span>
+            </button>
+          </td>
+        </tr>
       {{/each}}
-    </ul>
-  </div>
+    </tbody>
+  </table>
 
 
   <script id="ball-form" type="text/x-handlebars-template">
-    <div class="span2">
-      <div class="row">
-        <div class="span1">
-          <select name="ball-\{{index}}">
-            \{{{renderOptions}}}
-          </select>                   
-        </div>
-        <div class="span1">
-          <button type="button" class="btn btn-warning color-changer"></button>
-          <input type="hidden" name="ball-\{{index}}-color" value="yellow">
-        </div>
+    <div class="col-xs-2">
+      <div class="btn-group">
+        <select name="ball-\{{index}}" class="btn"> 
+          \{{{renderOptions}}}
+        </select>                   
+        <button type="button" class="btn btn-warning color-changer"></button>
+        <input type="hidden" name="ball-\{{index}}-color" value="yellow">
       </div>  
-    </div>
+    </div>  
   </script>
 
 </div>
