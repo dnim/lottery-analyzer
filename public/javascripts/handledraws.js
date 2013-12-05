@@ -1,4 +1,7 @@
 $(document).ready(function () {
+
+  var datePicker = $(".datepicker").datepicker({ autoclose: true, todayHighlight: true });
+
   var newDrawTemplate = Handlebars.compile($("#ball-form").html());
   var renderOptions = Handlebars.registerHelper("renderOptions", function () {
     var out = ""; 
@@ -17,11 +20,11 @@ $(document).ready(function () {
       if(cl.contains("btn-warning")){
         cl.remove("btn-warning");
         cl.add("btn-black");
-        this.parentNode.children[1].value = "black"
+        this.parentNode.children[2].value = "black"
       } else {
         cl.remove("btn-black");
         cl.add("btn-warning");
-        this.parentNode.children[1].value = "yellow"
+        this.parentNode.children[2].value = "yellow"
       }
     }
   };

@@ -26,6 +26,9 @@ app.set('views', __dirname + '/views');
 //app.set('view engine', 'jade');
 app.set('view engine', 'handlebars');
 
+//less
+app.use(require('less-middleware')({ src: __dirname + '/public' }));
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
