@@ -24,13 +24,13 @@ exports.newdraw = function (db){
                   } 
       balls.push(ball)
     };
-    return {date:new Date().getTime(), balls:balls}
+    return {date:rawDrawFromUi["new-draw-date"], balls:balls};
   }
 };
 
 exports.deletedraw = function (db) {
   return function (req, res){
-    
+    // TODO: 
   }
 }
 
