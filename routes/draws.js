@@ -8,10 +8,8 @@ exports.newdraw = function (db){
       user.draws.push(populateDraw(req.body));
       // user.password = "123";
       db.get("user").update({name:'andrew'}, user);
-      res.render("draws", {
-        requestedData: req.body["ball-1"],
-        user:user
-      });
+      res.redirect('showdraws')
+      res.end();      
     });
   }
 
@@ -39,7 +37,8 @@ exports.showdraws = function (db) {
     var users = db.get("user");
     users.findOne({name:'andrew'}, function(e, user){
       res.render("draws", { 
-        user: user
+        user: user,
+        userDraws: user.draws.sort(function(a, b){return b.date - a.date})
       });
     });
   };
